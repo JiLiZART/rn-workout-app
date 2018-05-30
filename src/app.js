@@ -1,14 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
 
 import {createStackNavigator} from 'react-navigation';
 
-import PersonsListView from './src/views/PersonsList/PersonsList'
-import PersonsViewView from './src/views/PersonView/PersonView'
-import PersonCreateView from './src/views/PersonCreate/PersonCreate'
+import PersonsListView from './views/PersonsList/PersonsList'
+import PersonsViewView from './views/PersonView/PersonView'
+import PersonCreateView from './views/PersonCreate/PersonCreate'
+import PersonEditView from './views/PersonEdit/PersonEdit'
 
-const store = createStore((state) => state);
+import store from './store';
 
 const RootStack = createStackNavigator(
     {
@@ -20,6 +20,9 @@ const RootStack = createStackNavigator(
         },
         PersonCreate: {
             screen: PersonCreateView
+        },
+        PersonEdit: {
+            screen: PersonEditView
         }
     },
     {
@@ -27,11 +30,13 @@ const RootStack = createStackNavigator(
     }
 );
 
+const navigationPersistenceKey = __DEV__ ? "NavigationStateDEV" : null;
+
 export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <RootStack/>
+                <RootStack persistenceKey={navigationPersistenceKey}/>
             </Provider>
         );
     }

@@ -20,8 +20,12 @@
   "dependencies": {
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-image-picker": "^0.26.10",
+    "react-native-segment-controller": "^1.0.0",
     "react-navigation": "^2.0.1",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "redux-create-reducer": "^1.1.2",
+    "redux-thunk": "^2.3.0"
   }
 }

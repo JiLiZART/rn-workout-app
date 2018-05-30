@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
-import {FlatList, Text, TouchableOpacity, View} from "react-native";
+import {Button, FlatList, Text, TouchableOpacity, View} from "react-native";
 import {connect} from 'react-redux'
+import {StyleSheet} from 'react-native'
 import styles from './PersonView.styles';
 import Avatar from "../../components/Avatar/Avatar";
+import SegmentControl from 'react-native-segment-controller';
+
+const cn = StyleSheet.flatten;
 
 @connect(
     state => ({
@@ -22,7 +26,22 @@ export default class PersonView extends Component {
 
         return {
             title: `${firstName} ${lastName}`,
+            headerRight: (
+                <Button
+                    onPress={() => navigation.push('PersonEdit')}
+                    title="Edit"
+                />
+            ),
         };
+    };
+
+    state = {
+        index: 0,
+        content: ''
+    };
+
+    onPress = (index) => {
+        this.setState({content: `Segment ${index + 1} selected !!!`, index});
     };
 
     render() {
@@ -37,8 +56,24 @@ export default class PersonView extends Component {
                 <View style={styles.person}>
                     <View style={styles.avatar}><Avatar url={avatar} size="lg"/></View>
                     <View style={styles.name}>
-                        <Text style={styles.nameText}>{firstName}</Text>
-                        <Text style={styles.nameText}>{lastName}</Text>
+                        <Text style={cn([styles.nameText, styles.nameFirst])}>{firstName}</Text>
+                        <Text style={cn([styles.nameText, styles.nameLast])}>{lastName}</Text>
+                    </View>
+                </View>
+                <View style={styles.content}>
+                    <SegmentControl
+                        values={['One', 'Two', 'Three', 'Four']}
+                        badges={[0, 5, 0, 2]}
+                        selectedIndex={this.state.index}
+                        height={30}
+                        onTabPress={this.onPress}
+                        borderRadius={5}
+                        tabBadgeContainerStyle={{backgroundColor: 'red'}}
+                    />
+                    <View style={{marginTop: 20, marginBottom: -50}}>
+                        <Text style={styles.tab}>{this.state.content}</Text>
+                        <Text style={styles.info}>Author: csath</Text>
+                        <Text style={styles.info}>Email: chanakaathurugiriya@gmail.com</Text>
                     </View>
                 </View>
                 <Text>Person View</Text>
